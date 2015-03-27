@@ -29,7 +29,7 @@ namespace Microsoft.Data.Entity.Relational.Metadata
             [CanBeNull] Type type = null)
         {
             Check.NotEmpty(name, nameof(name));
-            Check.NullButNotEmpty(schema, "schema");
+            Check.NullButNotEmpty(schema, nameof(schema));
 
             type = type ?? DefaultType;
 

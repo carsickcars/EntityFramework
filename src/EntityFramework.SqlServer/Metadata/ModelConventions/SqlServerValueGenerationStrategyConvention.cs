@@ -70,10 +70,14 @@ namespace Microsoft.Data.Entity.SqlServer.Metadata.ModelConventions
 
         public virtual InternalModelBuilder Apply(InternalModelBuilder modelBuilder)
         {
-            modelBuilder.Annotation(
-                SqlServerAnnotationNames.Prefix + SqlServerAnnotationNames.ValueGeneration,
-                SqlServerValueGenerationStrategy.Sequence.ToString(),
-                ConfigurationSource.Convention);
+            var extensions = modelBuilder.Metadata.SqlServer();
+
+            var sequence = extensions.GetOrAddSequence();
+
+            extensions.ValueGenerationStrategy = SqlServerValueGenerationStrategy.Sequence;
+            extensions.DefaultSequenceName = sequence.Name;
+            extensions.DefaultSequenceSchema = sequence.Schema;
+
             return modelBuilder;
         }
     }

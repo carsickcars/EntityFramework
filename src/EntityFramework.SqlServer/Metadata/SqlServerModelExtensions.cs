@@ -23,7 +23,7 @@ namespace Microsoft.Data.Entity.SqlServer.Metadata
             set
             {
                 // TODO: Issue #777: Non-string annotations
-                ((Model)Model)[SqlServerValueGenerationAnnotation] = value == null ? null : value.ToString();
+                ((Model)Model)[SqlServerValueGenerationAnnotation] = value?.ToString();
             }
         }
 
@@ -33,7 +33,7 @@ namespace Microsoft.Data.Entity.SqlServer.Metadata
             [param: CanBeNull]
             set
             {
-                Check.NullButNotEmpty(value, "value");
+                Check.NullButNotEmpty(value, nameof(value));
 
                 ((Model)Model)[SqlServerDefaultSequenceNameAnnotation] = value;
             }
@@ -45,7 +45,7 @@ namespace Microsoft.Data.Entity.SqlServer.Metadata
             [param: CanBeNull]
             set
             {
-                Check.NullButNotEmpty(value, "value");
+                Check.NullButNotEmpty(value, nameof(value));
 
                 ((Model)Model)[SqlServerDefaultSequenceSchemaAnnotation] = value;
             }
@@ -64,8 +64,8 @@ namespace Microsoft.Data.Entity.SqlServer.Metadata
 
         public virtual Sequence GetOrAddSequence([CanBeNull] string name = null, [CanBeNull] string schema = null)
         {
-            Check.NullButNotEmpty(name, "name");
-            Check.NullButNotEmpty(schema, "schema");
+            Check.NullButNotEmpty(name, nameof(name));
+            Check.NullButNotEmpty(schema, nameof(schema));
 
             name = name ?? Sequence.DefaultName;
 
